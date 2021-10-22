@@ -9,8 +9,6 @@
  */
 Complex::Complex(NumType real, NumType imaginary) : real_(real), imaginary_(imaginary)
 {
-    // set_real(real);
-    // set_imaginary(imaginary);
 }
 
 // Accessors
@@ -47,62 +45,32 @@ Complex Complex::Conjugate() const
 
 // Arithmatic Operation
 
-// (a + bi) + (c + di) = (a + c) + (b + d)i
 Complex Complex::operator+(const Complex &complex_num) const
 {
-    Complex result;
-    result.set_real(this->get_real() + complex_num.get_real());
-    result.set_imaginary(this->get_imaginary() + complex_num.get_imaginary());
+    Complex result = *this; //  make a copy of myself
+    result += complex_num;  //  use += to add to the copy
     return result;
 }
 
-// (a + bi) - (c + di) = (a - c) + (b - d)i
 Complex Complex::operator-(const Complex &complex_num) const
 {
-    Complex result;
-    result.set_real(this->get_real() - complex_num.get_real());
-    result.set_imaginary(this->get_imaginary() - complex_num.get_imaginary());
+    Complex result = *this; //  make a copy of myself
+    result -= complex_num;  //  use -= to subtract from the copy
     return result;
 }
 
-// (a + bi) * (c + di) = (ac - bd) + (ad + bc)i
 Complex Complex::operator*(const Complex &complex_num) const
 {
-    Complex result;
-    Complex::NumType a, b, c, d;
-    a = this->get_real();
-    b = this->get_imaginary();
-    c = complex_num.get_real();
-    d = complex_num.get_imaginary();
-
-    result.set_real(a * c - b * d);
-    result.set_imaginary(a * d + b * c);
-
+    Complex result = *this; //  make a copy of myself
+    result *= complex_num;  //  use *= to multiply the copy by
     return result;
 }
 
 // (a + bi) / (c + di) = (ac + bd)/(c^2 + d^2) + ((bc - ad)/(c^2 + d^2))i
 Complex Complex::operator/(const Complex &complex_num) const
 {
-    Complex result;
-    Complex::NumType a, b, c, d;
-    a = this->get_real();
-    b = this->get_imaginary();
-    c = complex_num.get_real();
-    d = complex_num.get_imaginary();
-
-    if (IsValidDivisor(complex_num))
-    {
-        result.set_real((a * c + b * d) / (c * c + d * d));
-        result.set_imaginary((b * c - a * d) / (c * c + d * d));
-    }
-    else
-    {
-        result.set_real(a);
-        result.set_imaginary(b);
-        std::cerr << "You cannot divide by zero \n";
-    };
-
+    Complex result = *this; // make a copy of myself
+    result /= complex_num;  // use /= to divide the copy by
     return result;
 }
 
@@ -117,6 +85,62 @@ bool Complex::operator!=(const Complex &complex_num) const
     return !(*this == complex_num);
 }
 
+// Compound Assignment Operators
+// (a + bi) + (c + di) = (a + c) + (b + d)i
+Complex &Complex::operator+=(const Complex &complex_num)
+{
+    this->set_real(this->get_real() + complex_num.get_real());
+    this->set_imaginary(this->get_imaginary() + complex_num.get_imaginary());
+    return *this;
+}
+
+// (a + bi) - (c + di) = (a - c) + (b - d)i
+Complex &Complex::operator-=(const Complex &complex_num)
+{
+    this->set_real(this->get_real() - complex_num.get_real());
+    this->set_imaginary(this->get_imaginary() - complex_num.get_imaginary());
+    return *this;
+}
+
+// (a + bi) * (c + di) = (ac - bd) + (ad + bc)i
+Complex &Complex::operator*=(const Complex &complex_num)
+{
+    Complex::NumType a, b, c, d;
+    a = this->get_real();
+    b = this->get_imaginary();
+    c = complex_num.get_real();
+    d = complex_num.get_imaginary();
+
+    this->set_real(a * c - b * d);
+    this->set_imaginary(a * d + b * c);
+
+    return *this;
+}
+
+// (a + bi) / (c + di) = (ac + bd)/(c^2 + d^2) + ((bc - ad)/(c^2 + d^2))i
+Complex &Complex::operator/=(const Complex &complex_num)
+{
+    Complex::NumType a, b, c, d;
+    a = this->get_real();
+    b = this->get_imaginary();
+    c = complex_num.get_real();
+    d = complex_num.get_imaginary();
+
+    if (IsValidDivisor(complex_num))
+    {
+        this->set_real((a * c + b * d) / (c * c + d * d));
+        this->set_imaginary((b * c - a * d) / (c * c + d * d));
+    }
+    else
+    {
+        // this->set_real(a);
+        // this->set_imaginary(b);
+        std::cerr << "You cannot divide by zero \n";
+    };
+    return *this;
+}
+
+// Checking if divisor is valid
 bool Complex::IsValidDivisor(const Complex &complex_num) const
 {
     return !(complex_num.get_real() == 0 && complex_num.get_imaginary() == 0);

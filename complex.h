@@ -35,7 +35,7 @@ public:
     bool operator==(const Complex &complex_num) const;
     bool operator!=(const Complex &complex_num) const;
 
-    // Assignment
+    // Compound Assignment Operators
     Complex &operator+=(const Complex &complex_num);
     Complex &operator-=(const Complex &complex_num);
     Complex &operator*=(const Complex &complex_num);
