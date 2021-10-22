@@ -7,8 +7,8 @@ int main()
 
     Complex c1, c2(1.2, 4.9), c3(2.2, 1.0), c4(-7.0, 9.6), c5(8.1, -4.3), c6(0.0, -7.1), c7(6.4), c8(0.0, 1.0), c9(0.0, 4.1), c10(0.0, -1.0), c11;
 
-    // cout << "type two doubles for c11: ";
-    // cin >> c11;
+    cout << "type two doubles for c11: ";
+    cin >> c11;
 
     cout << "Testing Ostream" << endl;
     cout << "===================================" << endl;
@@ -22,7 +22,7 @@ int main()
     cout << "c8 = " << c8 << endl;   //  expect i
     cout << "c9 = " << c9 << endl;   //  expect 4.1i
     cout << "c10 = " << c10 << endl; //  expect -i
-    cout << "c11 = " << c11 << endl; //  expect 0 or whatever user input
+    cout << "c11 = " << c11 << endl; //  expect 0 or whatever user input (will test with 0+i)
     cout << endl;
 
     cout << "Testing arithmatic operators" << endl;
@@ -35,6 +35,7 @@ int main()
     cout << "c2 / c3 = " << c2 / c3 << endl;           //  expect 1.291 + 1.640i
     cout << "c2 / c1 = " << c2 / c1 << endl;           //  expect divide by zero error and return 1.2 + 4.9i
     cout << " c2 / c5 = " << c2 / c5 << endl;          //  expect -0.135 + 0.533i
+    cout << "c11 * c11 = " << c11 * c11 << endl;       // -1
     cout << endl;
 
     cout << "Testing comparison operators" << endl;
@@ -45,9 +46,9 @@ int main()
 
     cout << "Testing member functions" << endl;
     cout << "===================================" << endl;
-    cout << "Conjugate of " << c5 << " is " << c5.Conjugate() << endl;     //  expect 8.1 + 4.3i
-    cout << "Real of " << c3 << " is " << c3.get_real() << endl;           //  expect 2.2
-    cout << "Imaginary of " << c4 << " is " << c4.get_imaginary() << endl; // expect 9.6
+    cout << "Conjugate of " << c5 << " is " << c5.conjugate() << endl;    //  expect 8.1 + 4.3i
+    cout << "Real of " << c3 << " is " << c3.getReal() << endl;           //  expect 2.2
+    cout << "Imaginary of " << c4 << " is " << c4.getImaginary() << endl; // expect 9.6
     cout << endl;
 
     cout << "Testing compound assignment operators" << endl;
